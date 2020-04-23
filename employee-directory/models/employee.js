@@ -10,6 +10,6 @@ const employeeSchema = new Schema({
   phoneExtension: { type: Number, required: true }
 });
 
-const Employee = mongoose.model("Emmployee", employeeSchema);
+const Employee = mongoose.model("Employee", employeeSchema);
 
 module.exports = Employee;

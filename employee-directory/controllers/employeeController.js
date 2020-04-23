@@ -1,4 +1,4 @@
-const db = require("../models/employee.js");
+const db = require("../models/Employee.js");
 
 // Defining methods for the booksController
 module.exports = {
