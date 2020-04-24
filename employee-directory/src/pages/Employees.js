@@ -4,7 +4,23 @@ import Table from '../components/Table/Table.js';
 import { Container, Row, Col } from '../components/Grid/Grid.js';
 import axios from 'axios';
 
-let employees = [];
+let employees = [{
+    firstName: 'Michael',
+    lastName: 'Bradford',
+    department: 'Equity',
+    jobTitle: 'Equity Closer',
+    email: 'abc@def.com',
+    phoneExtension: 12345
+}];
+
+let employeesControl = [{
+    firstName: 'Michael',
+    lastName: 'Bradford',
+    department: 'Equity',
+    jobTitle: 'Equity Closer',
+    email: 'abc@def.com',
+    phoneExtension: 12345
+}];
 
 function Employees() {
 //     console.log('here');
@@ -17,6 +33,9 @@ function Employees() {
 
 //     console.log('there');
 
+    console.log(employees);
+    console.log(employeesControl);
+    
     return(
         <Container fluid>
             <Row>
