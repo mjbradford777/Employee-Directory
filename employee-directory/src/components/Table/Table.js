@@ -68,7 +68,7 @@ function Table(props) {
             console.log('test');
             for (let i = 1; i < props.employees.length; i++) {
                 for (let j = i; j >= 0; j--) {
-                  if(props.employees[i] >= props.employees[j - 1]) {
+                  if(props.employees[i].phoneExtension >= props.employees[j - 1].phoneExtension) {
                     if (j === i) {
                       break;
                     } else {
@@ -89,6 +89,7 @@ function Table(props) {
             setSortJT(false);
             setSortEM(false);
             setSortPE(true);
+            console.log(props.employees);
         }
     }
 
@@ -104,7 +105,9 @@ function Table(props) {
         } else if (item === 'EM') {
             setSortEM(false);
         } else if (item === 'PE') {
+            props.employees.reverse();
             setSortPE(false);
+            console.log(props.employees);
         }
     }
 

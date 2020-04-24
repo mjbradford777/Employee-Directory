@@ -34,7 +34,6 @@ function Employees() {
 //     console.log('there');
 
     console.log(employees);
-    console.log(employeesControl);
     
     return(
         <Container fluid>
