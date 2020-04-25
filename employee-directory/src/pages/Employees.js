@@ -5,6 +5,7 @@ import { Container, Row, Col } from '../components/Grid/Grid.js';
 import axios from 'axios';
 
 let employees = [{
+    _id: 1,
     firstName: 'Michael',
     lastName: 'Bradford',
     department: 'Equity',
@@ -13,6 +14,7 @@ let employees = [{
     phoneExtension: 12345
 },
 {
+    _id: 2,
     firstName: 'Some',
     lastName: 'One',
     department: 'Somewhere',
@@ -21,6 +23,7 @@ let employees = [{
     phoneExtension: 67890
 },
 {
+    _id: 3,
     firstName: 'Test',
     lastName: 'McTester',
     department: 'Sales',

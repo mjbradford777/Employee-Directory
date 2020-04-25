@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Table.css';
 import $ from 'jquery';
+import NotUpdateSection from '../NotUpdateSection/NotUpdateSection';
+import UpdateSection from '../UpdateSection/UpdateSection';
 
 function Table(props) {
     const [add, setAdd] = useState(false);
@@ -10,8 +12,13 @@ function Table(props) {
     const [SortJT, setSortJT] = useState(false);
     const [SortEM, setSortEM] = useState(false);
     const [SortPE, setSortPE] = useState(false);
+    const [updateLock, setUpdateLock] = useState(false);
+    const [updateID, setUpdateID] = useState(null);
 
     function insertRowToAdd() {
+        if (updateLock) {
+            return;
+        }
         setAdd(true);
     }
 
@@ -28,7 +35,9 @@ function Table(props) {
     }
 
     function sortAscending(item) {
-        console.log('click');
+        if (updateLock) {
+            return;
+        }
         if (item === 'FN') {
             props.employees.sort(function(a, b) {
                 let nameA = a.firstName.toUpperCase();
@@ -138,6 +147,9 @@ function Table(props) {
     }
 
     function sortDescending(item) {
+        if (updateLock) {
+            return;
+        }
         if (item === 'FN') {
             props.employees.sort(function(a, b) {
                 let nameA = a.firstName.toUpperCase();
@@ -229,18 +241,11 @@ function Table(props) {
                     <th scope="col">Phone Extension {!SortPE ? <i className="fas fa-sort-down" onClick={() => sortAscending('PE')}></i> : <i className="fas fa-sort-up" onClick={() => sortDescending('PE')}></i>}</th>
                 </tr>
             </thead>
+            {!updateLock 
+            ? <NotUpdateSection employees={props.employees} updateLock={[updateLock, setUpdateLock]} updateID={[updateID, setUpdateID]}/>
+            : <UpdateSection employees={props.employees} updateLock={[updateLock, setUpdateLock]} updateID={[updateID, setUpdateID]}/>
+            }
             <tbody>
-                {props.employees.map((employee) => 
-                    <tr>
-                        <td><i className="fas fa-edit"></i></td>
-                        <td>{employee.firstName}</td>
-                        <td>{employee.lastName}</td>
-                        <td>{employee.department}</td>
-                        <td>{employee.jobTitle}</td>
-                        <td>{employee.email}</td>
-                        <td>{employee.phoneExtension}</td>
-                    </tr>
-                )}
                     {!add 
                     ? <tr><td><i className="fas fa-plus-circle" onClick={insertRowToAdd}></i></td></tr> 
                     : <tr>
