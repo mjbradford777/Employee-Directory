@@ -12,6 +12,7 @@ function Table(props) {
     const [SortPE, setSortPE] = useState(false);
     const [UpdateLock, setUpdateLock] = useState(false);
     const [UpdateID, setUpdateID] = useState(null);
+    const [DeleteSwitch, setDeleteSwitch] = useState(false);
 
     function insertRowToAdd() {
         if (UpdateLock) {
@@ -53,6 +54,19 @@ function Table(props) {
         }
         setUpdateID(null);
         setUpdateLock(false);
+    }
+
+    function deleteEmployee(event) {
+        for (let i = 0; i < props.employees.length; i++) {
+            if (props.employees[i]._id === parseInt(event.target.id)) {
+                props.employees.splice(i, 1);
+            }
+        }
+        if (DeleteSwitch) {
+            setDeleteSwitch(false);
+        } else {
+            setDeleteSwitch(true);
+        }
     }
 
     function sortAscending(item) {
@@ -254,6 +268,7 @@ function Table(props) {
             <thead>
                 <tr>
                     <th scope="col"></th>
+                    <th scope="col"></th>
                     <th scope="col">First Name {!SortFN ? <i className="fas fa-sort-down" onClick={() => sortAscending('FN')}></i> : <i className="fas fa-sort-up" onClick={() => sortDescending('FN')}></i>}</th>
                     <th scope="col">Last Name {!SortLN ? <i className="fas fa-sort-down" onClick={() => sortAscending('LN')}></i> : <i className="fas fa-sort-up" onClick={() => sortDescending('LN')}></i>}</th>
                     <th scope="col">Department {!SortDP ? <i className="fas fa-sort-down" onClick={() => sortAscending('DP')}></i> : <i className="fas fa-sort-up" onClick={() => sortDescending('DP')}></i>}</th>
@@ -266,7 +281,8 @@ function Table(props) {
                 {props.employees.map((employee) => {
                     return UpdateID !== employee._id
                     ? <tr>
-                        <td><i id={employee._id} className="fas fa-edit" onClick={handleEdit}></i></td>
+                        <td><i id={employee._id + "upd"} className="fas fa-edit" onClick={handleEdit}></i></td>
+                        <td><i id={employee._id + "del"} className="fas fa-trash-alt" onClick={deleteEmployee}></i></td>
                         <td>{employee.firstName}</td>
                         <td>{employee.lastName}</td>
                         <td>{employee.department}</td>
@@ -275,7 +291,8 @@ function Table(props) {
                         <td>{employee.phoneExtension}</td>
                     </tr>
                     : <tr>
-                        <td><i id={employee._id} className="far fa-save" onClick={updateEmployee}></i></td>
+                        <td><i id={employee._id + "upd"} className="far fa-save" onClick={updateEmployee}></i></td>
+                        <td><i id={employee._id + "del"} className="fas fa-trash-alt" onClick={deleteEmployee}></i></td>
                         <td><textarea id="firstName">{employee.firstName}</textarea></td>
                         <td><textarea id="lastName">{employee.lastName}</textarea></td>
                         <td><textarea id="department">{employee.department}</textarea></td>
