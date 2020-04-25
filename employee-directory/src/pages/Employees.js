@@ -11,6 +11,22 @@ let employees = [{
     jobTitle: 'Equity Closer',
     email: 'abc@def.com',
     phoneExtension: 12345
+},
+{
+    firstName: 'Some',
+    lastName: 'One',
+    department: 'Somewhere',
+    jobTitle: 'Something',
+    email: 'ghi@jkl.com',
+    phoneExtension: 67890
+},
+{
+    firstName: 'Test',
+    lastName: 'McTester',
+    department: 'Sales',
+    jobTitle: 'Seller',
+    email: 'mno@pqr.com',
+    phoneExtension: 13579
 }];
 
 let employeesControl = [{

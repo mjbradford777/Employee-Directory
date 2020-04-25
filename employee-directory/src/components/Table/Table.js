@@ -27,9 +27,21 @@ function Table(props) {
         setAdd(false);
     }
 
-    function sortDescending(item) {
+    function sortAscending(item) {
         console.log('click');
         if (item === 'FN') {
+            props.employees.sort(function(a, b) {
+                let nameA = a.firstName.toUpperCase();
+                let nameB = b.firstName.toUpperCase();
+                if (nameA < nameB) {
+                    return -1;
+                }
+                if (nameA > nameB) {
+                    return 1;
+                }
+
+                return 0;
+            });
             setSortFN(true);
             setSortLN(false);
             setSortDP(false);
@@ -37,6 +49,18 @@ function Table(props) {
             setSortEM(false);
             setSortPE(false);
         } else if (item === 'LN') {
+            props.employees.sort(function(a, b) {
+                let nameA = a.lastName.toUpperCase();
+                let nameB = b.lastName.toUpperCase();
+                if (nameA < nameB) {
+                    return -1;
+                }
+                if (nameA > nameB) {
+                    return 1;
+                }
+
+                return 0;
+            });
             setSortFN(false);
             setSortLN(true);
             setSortDP(false);
@@ -44,6 +68,18 @@ function Table(props) {
             setSortEM(false);
             setSortPE(false);
         } else if (item === 'DP') {
+            props.employees.sort(function(a, b) {
+                let nameA = a.department.toUpperCase();
+                let nameB = b.department.toUpperCase();
+                if (nameA < nameB) {
+                    return -1;
+                }
+                if (nameA > nameB) {
+                    return 1;
+                }
+
+                return 0;
+            });
             setSortFN(false);
             setSortLN(false);
             setSortDP(true);
@@ -51,6 +87,18 @@ function Table(props) {
             setSortEM(false);
             setSortPE(false);
         } else if (item === 'JT') {
+            props.employees.sort(function(a, b) {
+                let nameA = a.jobTitle.toUpperCase();
+                let nameB = b.jobTitle.toUpperCase();
+                if (nameA < nameB) {
+                    return -1;
+                }
+                if (nameA > nameB) {
+                    return 1;
+                }
+
+                return 0;
+            });
             setSortFN(false);
             setSortLN(false);
             setSortDP(false);
@@ -58,6 +106,18 @@ function Table(props) {
             setSortEM(false);
             setSortPE(false);
         } else if (item === 'EM') {
+            props.employees.sort(function(a, b) {
+                let nameA = a.email.toUpperCase();
+                let nameB = b.email.toUpperCase();
+                if (nameA < nameB) {
+                    return -1;
+                }
+                if (nameA > nameB) {
+                    return 1;
+                }
+
+                return 0;
+            });
             setSortFN(false);
             setSortLN(false);
             setSortDP(false);
@@ -65,49 +125,94 @@ function Table(props) {
             setSortEM(true);
             setSortPE(false);
         } else if (item === 'PE') {
-            console.log('test');
-            for (let i = 1; i < props.employees.length; i++) {
-                for (let j = i; j >= 0; j--) {
-                  if(props.employees[i].phoneExtension >= props.employees[j - 1].phoneExtension) {
-                    if (j === i) {
-                      break;
-                    } else {
-                      props.employees.splice(j, 0, props.employees[i]);
-                      props.employees.splice(i + 1, 1);
-                      break;
-                    } 
-                  } else if (j === 0) {
-                    props.employees.splice(0, 0, props.employees[i]);
-                    props.employees.splice(i + 1, 1);
-                    break;
-                  }
-                }
-              }
+            props.employees.sort(function(a, b) {
+                return a.phoneExtension - b.phoneExtension;
+            });
             setSortFN(false);
             setSortLN(false);
             setSortDP(false);
             setSortJT(false);
             setSortEM(false);
             setSortPE(true);
-            console.log(props.employees);
         }
     }
 
-    function sortAscending(item) {
+    function sortDescending(item) {
         if (item === 'FN') {
+            props.employees.sort(function(a, b) {
+                let nameA = a.firstName.toUpperCase();
+                let nameB = b.firstName.toUpperCase();
+                if (nameA < nameB) {
+                    return 1;
+                }
+                if (nameA > nameB) {
+                    return -1;
+                }
+
+                return 0;
+            });
             setSortFN(false);
         } else if (item === 'LN') {
+            props.employees.sort(function(a, b) {
+                let nameA = a.lastName.toUpperCase();
+                let nameB = b.lastName.toUpperCase();
+                if (nameA < nameB) {
+                    return 1;
+                }
+                if (nameA > nameB) {
+                    return -1;
+                }
+
+                return 0;
+            });
             setSortLN(false);
         } else if (item === 'DP') {
+            props.employees.sort(function(a, b) {
+                let nameA = a.department.toUpperCase();
+                let nameB = b.department.toUpperCase();
+                if (nameA < nameB) {
+                    return 1;
+                }
+                if (nameA > nameB) {
+                    return -1;
+                }
+
+                return 0;
+            });
             setSortDP(false);
         } else if (item === 'JT') {
+            props.employees.sort(function(a, b) {
+                let nameA = a.jobTitle.toUpperCase();
+                let nameB = b.jobTitle.toUpperCase();
+                if (nameA < nameB) {
+                    return 1;
+                }
+                if (nameA > nameB) {
+                    return -1;
+                }
+
+                return 0;
+            });
             setSortJT(false);
         } else if (item === 'EM') {
+            props.employees.sort(function(a, b) {
+                let nameA = a.email.toUpperCase();
+                let nameB = b.email.toUpperCase();
+                if (nameA < nameB) {
+                    return 1;
+                }
+                if (nameA > nameB) {
+                    return -1;
+                }
+
+                return 0;
+            });
             setSortEM(false);
         } else if (item === 'PE') {
-            props.employees.reverse();
+            props.employees.sort(function(a, b) {
+                return b.phoneExtension - a.phoneExtension;
+            });
             setSortPE(false);
-            console.log(props.employees);
         }
     }
 
@@ -116,12 +221,12 @@ function Table(props) {
             <thead>
                 <tr>
                     <th scope="col"></th>
-                    <th scope="col">First Name {!SortFN ? <i className="fas fa-sort-down" onClick={() => sortDescending('FN')}></i> : <i className="fas fa-sort-up" onClick={() => sortAscending('FN')}></i>}</th>
-                    <th scope="col">Last Name {!SortLN ? <i className="fas fa-sort-down" onClick={() => sortDescending('LN')}></i> : <i className="fas fa-sort-up" onClick={() => sortAscending('LN')}></i>}</th>
-                    <th scope="col">Department {!SortDP ? <i className="fas fa-sort-down" onClick={() => sortDescending('DP')}></i> : <i className="fas fa-sort-up" onClick={() => sortAscending('DP')}></i>}</th>
-                    <th scope="col">Job Title {!SortJT ? <i className="fas fa-sort-down" onClick={() => sortDescending('JT')}></i> : <i className="fas fa-sort-up" onClick={() => sortAscending('JT')}></i>}</th>
-                    <th scope="col">Email {!SortEM ? <i className="fas fa-sort-down" onClick={() => sortDescending('EM')}></i> : <i className="fas fa-sort-up" onClick={() => sortAscending('EM')}></i>}</th>
-                    <th scope="col">Phone Extension {!SortPE ? <i className="fas fa-sort-down" onClick={() => sortDescending('PE')}></i> : <i className="fas fa-sort-up" onClick={() => sortAscending('PE')}></i>}</th>
+                    <th scope="col">First Name {!SortFN ? <i className="fas fa-sort-down" onClick={() => sortAscending('FN')}></i> : <i className="fas fa-sort-up" onClick={() => sortDescending('FN')}></i>}</th>
+                    <th scope="col">Last Name {!SortLN ? <i className="fas fa-sort-down" onClick={() => sortAscending('LN')}></i> : <i className="fas fa-sort-up" onClick={() => sortDescending('LN')}></i>}</th>
+                    <th scope="col">Department {!SortDP ? <i className="fas fa-sort-down" onClick={() => sortAscending('DP')}></i> : <i className="fas fa-sort-up" onClick={() => sortDescending('DP')}></i>}</th>
+                    <th scope="col">Job Title {!SortJT ? <i className="fas fa-sort-down" onClick={() => sortAscending('JT')}></i> : <i className="fas fa-sort-up" onClick={() => sortDescending('JT')}></i>}</th>
+                    <th scope="col">Email {!SortEM ? <i className="fas fa-sort-down" onClick={() => sortAscending('EM')}></i> : <i className="fas fa-sort-up" onClick={() => sortDescending('EM')}></i>}</th>
+                    <th scope="col">Phone Extension {!SortPE ? <i className="fas fa-sort-down" onClick={() => sortAscending('PE')}></i> : <i className="fas fa-sort-up" onClick={() => sortDescending('PE')}></i>}</th>
                 </tr>
             </thead>
             <tbody>
