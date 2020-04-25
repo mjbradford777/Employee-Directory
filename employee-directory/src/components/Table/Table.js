@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Table.css';
 import $ from 'jquery';
-import NotUpdateSection from '../NotUpdateSection/NotUpdateSection';
-import UpdateSection from '../UpdateSection/UpdateSection';
 
 function Table(props) {
     const [add, setAdd] = useState(false);
@@ -12,11 +10,11 @@ function Table(props) {
     const [SortJT, setSortJT] = useState(false);
     const [SortEM, setSortEM] = useState(false);
     const [SortPE, setSortPE] = useState(false);
-    const [updateLock, setUpdateLock] = useState(false);
-    const [updateID, setUpdateID] = useState(null);
+    const [UpdateLock, setUpdateLock] = useState(false);
+    const [UpdateID, setUpdateID] = useState(null);
 
     function insertRowToAdd() {
-        if (updateLock) {
+        if (UpdateLock) {
             return;
         }
         setAdd(true);
@@ -34,8 +32,31 @@ function Table(props) {
         setAdd(false);
     }
 
+    function handleEdit(event) {
+        if (UpdateLock) {
+            return;
+        };
+        setUpdateID(parseInt(event.target.id));
+        setUpdateLock(true);
+    }
+
+    function updateEmployee() {
+        for (let i = 0; i < props.employees.length; i++) {
+            if (props.employees[i]._id === UpdateID) {
+                props.employees[i].firstName = $('#firstName').val();
+                props.employees[i].lastName = $('#lastName').val();
+                props.employees[i].department = $('#department').val();
+                props.employees[i].jobTitle = $('#jobTitle').val();
+                props.employees[i].email = $('#email').val();
+                props.employees[i].phoneExtension = parseInt($('#phoneExtension').val());
+            }
+        }
+        setUpdateID(null);
+        setUpdateLock(false);
+    }
+
     function sortAscending(item) {
-        if (updateLock) {
+        if (UpdateLock) {
             return;
         }
         if (item === 'FN') {
@@ -147,7 +168,7 @@ function Table(props) {
     }
 
     function sortDescending(item) {
-        if (updateLock) {
+        if (UpdateLock) {
             return;
         }
         if (item === 'FN') {
@@ -241,10 +262,31 @@ function Table(props) {
                     <th scope="col">Phone Extension {!SortPE ? <i className="fas fa-sort-down" onClick={() => sortAscending('PE')}></i> : <i className="fas fa-sort-up" onClick={() => sortDescending('PE')}></i>}</th>
                 </tr>
             </thead>
-            {!updateLock 
-            ? <NotUpdateSection employees={props.employees} updateLock={[updateLock, setUpdateLock]} updateID={[updateID, setUpdateID]}/>
-            : <UpdateSection employees={props.employees} updateLock={[updateLock, setUpdateLock]} updateID={[updateID, setUpdateID]}/>
-            }
+            <tbody>
+                {props.employees.map((employee) => {
+                    return UpdateID !== employee._id
+                    ? <tr>
+                        <td><i id={employee._id} className="fas fa-edit" onClick={handleEdit}></i></td>
+                        <td>{employee.firstName}</td>
+                        <td>{employee.lastName}</td>
+                        <td>{employee.department}</td>
+                        <td>{employee.jobTitle}</td>
+                        <td>{employee.email}</td>
+                        <td>{employee.phoneExtension}</td>
+                    </tr>
+                    : <tr>
+                        <td><i id={employee._id} className="far fa-save" onClick={updateEmployee}></i></td>
+                        <td><textarea id="firstName">{employee.firstName}</textarea></td>
+                        <td><textarea id="lastName">{employee.lastName}</textarea></td>
+                        <td><textarea id="department">{employee.department}</textarea></td>
+                        <td><textarea id="jobTitle">{employee.jobTitle}</textarea></td>
+                        <td><textarea id="email">{employee.email}</textarea></td>
+                        <td><textarea id="phoneExtension">{employee.phoneExtension}</textarea></td>
+                    </tr>
+                }
+                
+                )}
+            </tbody>
             <tbody>
                     {!add 
                     ? <tr><td><i className="fas fa-plus-circle" onClick={insertRowToAdd}></i></td></tr> 
