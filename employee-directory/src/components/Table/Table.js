@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Table.css';
 import $ from 'jquery';
+import axios from 'axios';
 
 function Table(props) {
     const [add, setAdd] = useState(false);
@@ -22,7 +23,10 @@ function Table(props) {
     }
 
     function createEmployee() {
-        props.employees.push({
+        if ($('#firstName').val() === '' || $('#lastName').val() === '' || $('#department').val() === '' || $('#jobTitle').val() === '' || $('#email').val() === '' || $('#phoneExtension').val() === '') {
+            return;
+        }
+        axios.post('/api/', {
             firstName: $('#firstName').val(), 
             lastName: $('#lastName').val(), 
             department: $('#department').val(),
@@ -30,71 +34,52 @@ function Table(props) {
             email: $('#email').val(),
             phoneExtension: parseInt($('#phoneExtension').val())
         })
-        props.employeesControl.push({
-            firstName: $('#firstName').val(), 
-            lastName: $('#lastName').val(), 
-            department: $('#department').val(),
-            jobTitle: $('#jobTitle').val(),
-            email: $('#email').val(),
-            phoneExtension: parseInt($('#phoneExtension').val())
-        })
-        setAdd(false);
-        props.handleSwitch();
+        .then(function(response) {
+            console.log(response);
+            setAdd(false);
+            props.handleSwitch();
+        }) 
     }
 
     function handleEdit(event) {
         if (UpdateLock) {
             return;
         };
-        setUpdateID(parseInt(event.target.id));
+        setUpdateID(event.target.id.substring(0, 24));
         setUpdateLock(true);
     }
 
     function updateEmployee() {
-        for (let i = 0; i < props.employees.length; i++) {
-            if (props.employees[i]._id === UpdateID) {
-                props.employees[i].firstName = $('#firstName').val();
-                props.employees[i].lastName = $('#lastName').val();
-                props.employees[i].department = $('#department').val();
-                props.employees[i].jobTitle = $('#jobTitle').val();
-                props.employees[i].email = $('#email').val();
-                props.employees[i].phoneExtension = parseInt($('#phoneExtension').val());
-                
-            }
+        if ($('#firstName').val() === '' || $('#lastName').val() === '' || $('#department').val() === '' || $('#jobTitle').val() === '' || $('#email').val() === '' || $('#phoneExtension').val() === '') {
+            return;
         }
-        for (let i = 0; i < props.employeesControl.length; i++) {
-            if (props.employeesControl[i]._id === UpdateID) {
-                props.employeesControl[i].firstName = $('#firstName').val();
-                props.employeesControl[i].lastName = $('#lastName').val();
-                props.employeesControl[i].department = $('#department').val();
-                props.employeesControl[i].jobTitle = $('#jobTitle').val();
-                props.employeesControl[i].email = $('#email').val();
-                props.employeesControl[i].phoneExtension = parseInt($('#phoneExtension').val());
-                
-            }
-        }
-        setUpdateID(null);
-        setUpdateLock(false);
-        props.handleSwitch();
+        axios.put(`/api/${UpdateID}`, {
+            firstName: $('#firstName').val(), 
+            lastName: $('#lastName').val(), 
+            department: $('#department').val(),
+            jobTitle: $('#jobTitle').val(),
+            email: $('#email').val(),
+            phoneExtension: parseInt($('#phoneExtension').val())
+        })
+        .then(function(response) {
+            console.log(response);
+            setUpdateID(null);
+            setUpdateLock(false);
+            props.handleSwitch();
+        })
     }
 
     function deleteEmployee(event) {
-        for (let i = 0; i < props.employees.length; i++) {
-            if (props.employees[i]._id === parseInt(event.target.id)) {
-                props.employees.splice(i, 1);
+        axios.delete(`/api/${event.target.id.substring(0, 24)}`)
+        .then(function(response) {
+            console.log(response);
+            if (DeleteSwitch) {
+                setDeleteSwitch(false);
+            } else {
+                setDeleteSwitch(true);
             }
-        }
-        for (let i = 0; i < props.employeesControl.length; i++) {
-            if (props.employeesControl[i]._id === parseInt(event.target.id)) {
-                props.employeesControl.splice(i, 1);
-            }
-        }
-        if (DeleteSwitch) {
-            setDeleteSwitch(false);
-        } else {
-            setDeleteSwitch(true);
-        }
-        props.handleSwitch();
+            props.handleSwitch();
+        })
     }
 
     function sortAscending(item) {
@@ -307,7 +292,7 @@ function Table(props) {
             </thead>
             <tbody>
                 {props.employees.map((employee) => {
-                    return UpdateID !== employee._id
+                    return UpdateID != employee._id
                     ? <tr>
                         <td><i id={employee._id + "upd"} className="fas fa-edit" onClick={handleEdit}></i></td>
                         <td><i id={employee._id + "del"} className="fas fa-trash-alt" onClick={deleteEmployee}></i></td>

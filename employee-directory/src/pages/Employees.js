@@ -3,62 +3,22 @@ import Title from '../components/Title/Title.js';
 import Table from '../components/Table/Table.js';
 import Filter from '../components/Filter/Filter.js';
 import { Container, Row, Col } from '../components/Grid/Grid.js';
+import $ from 'jquery';
 import axios from 'axios';
 
-let employees = [{
-    _id: 1,
-    firstName: 'Michael',
-    lastName: 'Bradford',
-    department: 'Equity',
-    jobTitle: 'Equity Closer',
-    email: 'abc@def.com',
-    phoneExtension: 12345
-},
-{
-    _id: 2,
-    firstName: 'Some',
-    lastName: 'One',
-    department: 'Somewhere',
-    jobTitle: 'Something',
-    email: 'ghi@jkl.com',
-    phoneExtension: 67890
-},
-{
-    _id: 3,
-    firstName: 'Test',
-    lastName: 'McTester',
-    department: 'Sales',
-    jobTitle: 'Seller',
-    email: 'mno@pqr.com',
-    phoneExtension: 13579
-}];
+let employees = [];
+let employeesControl = [];
 
-let employeesControl = [{
-    firstName: 'Michael',
-    lastName: 'Bradford',
-    department: 'Equity',
-    jobTitle: 'Equity Closer',
-    email: 'abc@def.com',
-    phoneExtension: 12345
-},
-{
-    _id: 2,
-    firstName: 'Some',
-    lastName: 'One',
-    department: 'Somewhere',
-    jobTitle: 'Something',
-    email: 'ghi@jkl.com',
-    phoneExtension: 67890
-},
-{
-    _id: 3,
-    firstName: 'Test',
-    lastName: 'McTester',
-    department: 'Sales',
-    jobTitle: 'Seller',
-    email: 'mno@pqr.com',
-    phoneExtension: 13579
-}];
+axios.get('/api/')
+.then(function(response) {
+    console.log(response);
+    response.data.forEach(element => {
+        employees.push(element);
+        employeesControl.push(element);
+    })
+    console.log(employees);
+    console.log(employeesControl);
+}); 
 
 class Employees extends React.Component { 
     constructor(props) {
@@ -68,10 +28,30 @@ class Employees extends React.Component {
         this.handleSwitch = this.handleSwitch.bind(this);
     }
     
-    handleSwitch() {
-        this.setState(state => ({
-            employeeSwitch: !state.employeeSwitch
-        }));
+    handleSwitch() { 
+        axios.get('/api/')
+        .then(function(response) {
+            console.log(response);
+            employees = [];
+            employeesControl = [];
+            response.data.forEach(element => {
+                employees.push(element);
+                employeesControl.push(element);
+            })
+            console.log(employees);
+            console.log(employeesControl);
+        })
+        setTimeout(() => {
+            this.setState(state => ({
+                employeeSwitch: !state.employeeSwitch
+            }));
+        }, 1000)
+    }
+
+    componentDidMount() {
+        setTimeout(() => {
+            this.handleSwitch();
+        }, 1000)
     }
 
     render() {

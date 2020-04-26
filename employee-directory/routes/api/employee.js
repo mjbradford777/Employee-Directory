@@ -6,7 +6,8 @@ router.route("/")
   .get(employeeController.findAll)
   .post(employeeController.create);
 
-router.get('/test', function(req, res) {
-    res.json({title: 'I\'m working'});
-})
+router.route('/:id')
+    .put(employeeController.update)
+    .delete(employeeController.remove);
+
 module.exports = router;
