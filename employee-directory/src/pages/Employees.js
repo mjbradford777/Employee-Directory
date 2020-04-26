@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Title from '../components/Title/Title.js';
 import Table from '../components/Table/Table.js';
 import Filter from '../components/Filter/Filter.js';
@@ -60,28 +60,43 @@ let employeesControl = [{
     phoneExtension: 13579
 }];
 
-function Employees() {    
-    return(
-        <Container fluid>
-            <Row>
-                <Col size="md-12">
-                    <Title>Employee Directory</Title>
-                </Col>
-            </Row>
+class Employees extends React.Component { 
+    constructor(props) {
+        super(props)
+        this.state = {employeeSwitch: false}
 
-            <Row>
-                <Col size="md-12">
-                    <Filter employees={employees} employeesControl={employeesControl}/>
-                </Col>
-            </Row>
+        this.handleSwitch = this.handleSwitch.bind(this);
+    }
+    
+    handleSwitch() {
+        this.setState(state => ({
+            employeeSwitch: !state.employeeSwitch
+        }));
+    }
 
-            <Row>
-                <Col size="md-12">
-                    <Table employees={employees} />
-                </Col>
-            </Row>
-        </Container>
-    );
+    render() {
+        return(
+            <Container fluid>
+                <Row>
+                    <Col size="md-12">
+                        <Title>Employee Directory</Title>
+                    </Col>
+                </Row>
+    
+                <Row>
+                    <Col size="md-12">
+                        <Filter employees={employees} employeesControl={employeesControl} handleSwitch={this.handleSwitch}/>
+                    </Col>
+                </Row>
+    
+                <Row>
+                    <Col size="md-12">
+                        <Table employees={employees} employeesControl={employeesControl} handleSwitch={this.handleSwitch}/>
+                    </Col>
+                </Row>
+            </Container>
+        );
+    }
 }
 
 export default Employees;

@@ -9,8 +9,9 @@ function Filter(props) {
     function filterFunction() {
         let spliceArray = [];
         if ($('#firstNameFilter').val() !== '') {
+            console.log('pass');
             for (let i = 0; i < props.employees.length; i++) {
-                if(props.employees[i].firstName !== $('#firstNameFilter').val()) {
+                if(props.employees[i].firstName.toLowerCase() !== $('#firstNameFilter').val().toLowerCase()) {
                     spliceArray.push(i);
                 }
             }
@@ -18,9 +19,10 @@ function Filter(props) {
                 props.employees.splice(spliceArray[i], 1);
             }
         }
+        spliceArray = [];
         if ($('#lastNameFilter').val() !== '') {
             for (let i = 0; i < props.employees.length; i++) {
-                if(props.employees[i].lastName !== $('#lastNameFilter').val()) {
+                if(props.employees[i].lastName.toLowerCase() !== $('#lastNameFilter').val().toLowerCase()) {
                     spliceArray.push(i);
                 }
             }
@@ -28,9 +30,10 @@ function Filter(props) {
                 props.employees.splice(spliceArray[i], 1);
             }
         }
+        spliceArray = [];
         if ($('#departmentFilter').val() !== '') {
             for (let i = 0; i < props.employees.length; i++) {
-                if(props.employees[i].department !== $('#departmentFilter').val()) {
+                if(props.employees[i].department.toLowerCase() !== $('#departmentFilter').val().toLowerCase()) {
                     spliceArray.push(i);
                 }
             }
@@ -38,9 +41,10 @@ function Filter(props) {
                 props.employees.splice(spliceArray[i], 1);
             }
         }
+        spliceArray = [];
         if ($('#jobTitleFilter').val() !== '') {
             for (let i = 0; i < props.employees.length; i++) {
-                if(props.employees[i].jobTitle !== $('#jobTitleFilter').val()) {
+                if(props.employees[i].jobTitle.toLowerCase() !== $('#jobTitleFilter').val().toLowerCase()) {
                     spliceArray.push(i);
                 }
             }
@@ -48,9 +52,10 @@ function Filter(props) {
                 props.employees.splice(spliceArray[i], 1);
             }
         }
+        spliceArray = [];
         if ($('#emailFilter').val() !== '') {
             for (let i = 0; i < props.employees.length; i++) {
-                if(props.employees[i].email !== $('#emailFilter').val()) {
+                if(props.employees[i].email.toLowerCase() !== $('#emailFilter').val().toLowerCase()) {
                     spliceArray.push(i);
                 }
             }
@@ -58,9 +63,10 @@ function Filter(props) {
                 props.employees.splice(spliceArray[i], 1);
             }
         }
+        spliceArray = [];
         if ($('#phoneExtensionFilter').val() !== '') {
             for (let i = 0; i < props.employees.length; i++) {
-                if(props.employees[i].phoneExtension !== $('#phoneExtensionFilter').val()) {
+                if(props.employees[i].phoneExtension !== parseInt($('#phoneExtensionFilter').val())) {
                     spliceArray.push(i);
                 }
             }
@@ -70,6 +76,7 @@ function Filter(props) {
         }
         console.log(props.employees);
         setUseFilter(true);
+        props.handleSwitch();
     }
 
     function unfilterFunction() {
@@ -79,6 +86,7 @@ function Filter(props) {
         }
         console.log(props.employees);
         setUseFilter(false);
+        props.handleSwitch();
     }
 
     const filter = (

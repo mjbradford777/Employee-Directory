@@ -30,7 +30,16 @@ function Table(props) {
             email: $('#email').val(),
             phoneExtension: parseInt($('#phoneExtension').val())
         })
+        props.employeesControl.push({
+            firstName: $('#firstName').val(), 
+            lastName: $('#lastName').val(), 
+            department: $('#department').val(),
+            jobTitle: $('#jobTitle').val(),
+            email: $('#email').val(),
+            phoneExtension: parseInt($('#phoneExtension').val())
+        })
         setAdd(false);
+        props.handleSwitch();
     }
 
     function handleEdit(event) {
@@ -50,10 +59,23 @@ function Table(props) {
                 props.employees[i].jobTitle = $('#jobTitle').val();
                 props.employees[i].email = $('#email').val();
                 props.employees[i].phoneExtension = parseInt($('#phoneExtension').val());
+                
+            }
+        }
+        for (let i = 0; i < props.employeesControl.length; i++) {
+            if (props.employeesControl[i]._id === UpdateID) {
+                props.employeesControl[i].firstName = $('#firstName').val();
+                props.employeesControl[i].lastName = $('#lastName').val();
+                props.employeesControl[i].department = $('#department').val();
+                props.employeesControl[i].jobTitle = $('#jobTitle').val();
+                props.employeesControl[i].email = $('#email').val();
+                props.employeesControl[i].phoneExtension = parseInt($('#phoneExtension').val());
+                
             }
         }
         setUpdateID(null);
         setUpdateLock(false);
+        props.handleSwitch();
     }
 
     function deleteEmployee(event) {
@@ -62,11 +84,17 @@ function Table(props) {
                 props.employees.splice(i, 1);
             }
         }
+        for (let i = 0; i < props.employeesControl.length; i++) {
+            if (props.employeesControl[i]._id === parseInt(event.target.id)) {
+                props.employeesControl.splice(i, 1);
+            }
+        }
         if (DeleteSwitch) {
             setDeleteSwitch(false);
         } else {
             setDeleteSwitch(true);
         }
+        props.handleSwitch();
     }
 
     function sortAscending(item) {
