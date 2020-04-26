@@ -76,7 +76,7 @@ function Filter(props) {
         }
         console.log(props.employees);
         setUseFilter(true);
-        props.handleSwitch();
+        props.safeSwitch();
     }
 
     function unfilterFunction() {
@@ -86,7 +86,7 @@ function Filter(props) {
         }
         console.log(props.employees);
         setUseFilter(false);
-        props.handleSwitch();
+        props.safeSwitch();
     }
 
     const filter = (

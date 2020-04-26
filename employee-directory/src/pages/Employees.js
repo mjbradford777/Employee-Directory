@@ -23,9 +23,10 @@ axios.get('/api/')
 class Employees extends React.Component { 
     constructor(props) {
         super(props)
-        this.state = {employeeSwitch: false}
+        this.state = {employeeSwitch: false, safetySwitch: false}
 
         this.handleSwitch = this.handleSwitch.bind(this);
+        this.safeSwitch = this.safeSwitch.bind(this);
     }
     
     handleSwitch() { 
@@ -42,10 +43,16 @@ class Employees extends React.Component {
             console.log(employeesControl);
         })
         setTimeout(() => {
-            this.setState(state => ({
-                employeeSwitch: !state.employeeSwitch
-            }));
+            this.setState({
+                employeeSwitch: !this.state.employeeSwitch
+            });
         }, 1000)
+    }
+
+    safeSwitch() {
+        this.setState({
+            safetySwitch: !this.state.safetySwitch
+        })
     }
 
     componentDidMount() {
@@ -65,7 +72,7 @@ class Employees extends React.Component {
     
                 <Row>
                     <Col size="md-12">
-                        <Filter employees={employees} employeesControl={employeesControl} handleSwitch={this.handleSwitch}/>
+                        <Filter employees={employees} employeesControl={employeesControl} handleSwitch={this.handleSwitch} safeSwitch={this.safeSwitch}/>
                     </Col>
                 </Row>
     
