@@ -12,6 +12,8 @@ app.use(express.json());
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
+
+app.use(express.static('public'))
 // Add routes, both API and view
 app.use(routes);
 
@@ -19,7 +21,7 @@ app.use(routes);
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/employeedirectory");
 
 app.get('*', function(req, res) {
-  res.sendFile(path.join(__dirname, './build/index.html'))
+  res.sendFile(path.join(__dirname, './public/index.html'))
 })
 
 // Start the API server
