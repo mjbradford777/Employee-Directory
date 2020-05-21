@@ -14,6 +14,10 @@ A full-stack React based employee directory app. Stores and updates employee inf
 * Users can update and delete existing employees.
 * Users can sort employees by any of the employee information, in ascending or descending order.
 * Users can filter employees by any of the employee information.  
+
+# Deployed Application
+
+https://radiant-river-34027.herokuapp.com/
 ​
 ​
 ## Setup/Installation Requirements
